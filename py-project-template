@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+
+import logging
+from datetime import datetime
+from os import mkdir, path, remove
+from pathlib import Path
+
+'''
+<THIS IS THE SCRIPT DESCRIPTION>
+'''
+
+##########################
+### CHECK & EDIT BELOW ###
+##########################
+
+###################
+### COMMON DATA ###
+
+### WORKING DIR ###
+work_dir = '<absolute-path-to-script-n-script-data>'
+
+### LOGS TO KEEP AFTER ROTATION ###
+logs_to_keep = 30
+
+### LOGS LOCATION ###
+logs_dir = work_dir + '/logs'
+#logs_dir = work_dir + '/var/log/PROJECT/OGS'
+
+####################
+### PROJECT DATA ###
+
+'''
+Section for project va data
+'''
+
+################################
+### NO NEED TO EDIT FURTHER! ###
+################################
+
+#######################
+### LOGGING SECTION ###
+
+### SET TIME TO ###
+start_time = datetime.now()
+start_date = start_time.strftime('%d-%m-%Y')
+
+### CHECK LOGS DIR EXIST/CREATE ###
+if not path.isdir(logs_dir):
+    mkdir(logs_dir)
+
+### DEFINE LOG NAME ###
+app_log_name = logs_dir+'/PROJECT-LOG_' + str(start_date) + '.log'
+
+### DEFINE LOGGING SETTINGS ###
+logging.basicConfig(filename=app_log_name, filemode='a', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%Y %H:%M:%S')
+
+### SCRIPT START ALERT ###
+logging.info('SCRIPT WORK STARTED: <PROJECT NAME>')
+logging.info('Script Starting Date&Time is: ' + str(start_date))
+
+############################
+##### HELPER FUNCTIONS #####
+
+### FILES ROTATION (LOGS/OTHER) ###
+def files_rotate(path_to_rotate, num_of_files_to_keep):
+    '''
+    This function is for log rotation.
+    ARGS:
+        path_to_rotate: absolute PATH of logs location
+        num_of_files_to_keep: number of LOGS to keep
+            delete rest
+    '''
+    count_files_to_keep = 1
+    basepath = sorted(Path(path_to_rotate).iterdir(), key=path.getctime, reverse=True)
+    for entry in basepath:
+        if count_files_to_keep > num_of_files_to_keep:
+            remove(entry)
+            logging.info(f'removed file was: {entry}')
+        count_files_to_keep += 1
+
+### ESTIMATED TIME ###
+def files_rotate_n_count_estimated_time():
+    '''
+    This function is for post-work procedures:
+    1) Logs rotation
+    2) Count script estimated time
+
+    Takes no ARGS.
+    '''
+    logging.info('START: script post jobs')
+    try:
+        logging.info('START: log rotation...')
+        files_rotate(logs_dir, logs_to_keep)
+        logging.info('DONE: log rotation\n')    
+    except Exception as error:
+        logging.exception('ERROR: FAILURE to rotate logs')
+    
+    logging.info('DONE: script post jobs')
+    end_time = datetime.now()
+    logging.info('Estimated time is: ' + str(end_time - start_time))
+    logging.info('######################\n')
+    exit()
+
+#####################
+### MAIN WORKFLOW ###
+
+############################
+### POST-WORK PROCEDURES ###
+
+### FINISH ###
+logging.info('#########################')
+logging.info('DONE: Script job done!\n') 
+files_rotate_n_count_estimated_time()  
