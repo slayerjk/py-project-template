@@ -4,6 +4,7 @@ import logging
 from datetime import datetime
 from os import mkdir, path, remove
 from pathlib import Path
+from smtplib import SMTP
 
 '''
 <THIS IS THE SCRIPT DESCRIPTION>
@@ -15,6 +16,9 @@ from pathlib import Path
 
 ###################
 ### COMMON DATA ###
+
+### SCRIPT APPNAME(FOR SEND MAIL FUNCTION & ETC)
+appname = 'YOUR_PROJECT_NAME'
 
 ### WORKING DIR
 work_dir = '<absolute-path-to-script-n-script-data>'
@@ -29,6 +33,13 @@ logs_to_keep = 30
 ### LOGS LOCATION
 logs_dir = work_dir + '/logs'
 #logs_dir = work_dir + '/var/log/PROJECT/OGS'
+
+### SMTP DATA(WITHOUT AUTH); NO BY DEFAULT ###
+send_mail_option = 'no'
+smtp_server = '<YOUR-SMTP-SERVER>'
+from_addr = appname+'@EX.COM'
+to_addr_list = ['ADMIN@EX.COM']
+smtp_port = 25
 
 ####################
 ### PROJECT DATA ###
@@ -53,14 +64,14 @@ if not path.isdir(logs_dir):
     mkdir(logs_dir)
 
 ### DEFINE LOG NAME
-app_log_name = logs_dir+'/PROJECT-LOG_' + str(start_date) + '.log'
+app_log_name = f'logs_dir/{appname}_{str(start_date)}.log'
 
 ### DEFINE LOGGING SETTINGS
-logging.basicConfig(filename=app_log_name, filemode='a', encoding='utf-8', level=logging.INFO,
+logging.basicConfig(filename=app_log_name, filemode='a', level=logging.INFO,
                     format=logging_format, datefmt=logging_datefmt)
 
 ### SCRIPT START ALERT
-logging.info('SCRIPT WORK STARTED: <PROJECT NAME>')
+logging.info(f'SCRIPT WORK STARTED: {appname}')
 logging.info('Script Starting Date&Time is: ' + str(start_date))
 
 ############################
@@ -104,7 +115,28 @@ def files_rotate_n_count_estimated_time():
     end_time = datetime.now()
     logging.info('Estimated time is: ' + str(end_time - start_time))
     logging.info('######################\n')
-    exit()
+
+### EMAIL REPORT ###
+'''
+To send email report at.
+By default, at the end of the script only.
+'''
+def send_mail_report():
+    if send_mail_option == 'yes':
+        logging.info('START: sending error report')
+        subj = appname+' Script Error Occured'
+        with open(app_log_name, 'r') as log:
+            msg = log.read()
+        try:
+            with SMTP(smtp_server, smtp_port) as send_mail:
+                send_mail.ehlo()
+                send_mail.sendmail(from_addr=from_addr, to_addrs=to_addr_list, msg=f'subject: {subj}({start_date})\n\n{start_date}:\n{msg}')
+                send_mail.quit()
+                logging.info('DONE: sending error report\n')
+        except Exception as e:
+            logging.warning('FAILED: sending error report, moving on...\n')
+    else:
+        logging.warning('Email report was not set, skipping')
 
 #####################
 ### MAIN WORKFLOW ###
@@ -115,4 +147,6 @@ def files_rotate_n_count_estimated_time():
 ### FINISH
 logging.info('#########################')
 logging.info('DONE: Script job done!\n') 
-files_rotate_n_count_estimated_time()  
+files_rotate_n_count_estimated_time()
+send_mail_report()
+exit()
