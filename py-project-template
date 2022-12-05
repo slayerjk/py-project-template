@@ -21,7 +21,16 @@ from smtplib import SMTP
 appname = 'YOUR_PROJECT_NAME'
 
 ### WORKING DIR
-work_dir = '<absolute-path-to-script-n-script-data>'
+'''
+By default script uses script's location dir.
+If you need custom path for script data, 
+set custom_script_data_path = 'yes'
+'''
+custom_script_data_path = 'no'
+if custom_script_data_path == 'yes':
+    script_data = '<your-absolute-path>'
+else:
+    script_data = 'script_data'
 
 ### LOGS FORMAT
 logging_format='%(asctime)s - %(levelname)s - %(message)s'
@@ -31,8 +40,16 @@ logging_datefmt = '%d-%b-%Y %H:%M:%S'
 logs_to_keep = 30
 
 ### LOGS LOCATION
-logs_dir = work_dir + '/logs'
-#logs_dir = work_dir + '/var/log/PROJECT/OGS'
+'''
+By default script uses script's location dir.
+If you need custom path for logs, 
+set custom_logs_path = 'yes'
+'''
+custom_logs_path = 'no'
+if custom_logs_path == 'yes':
+    logs_dir = f'/var/{appname}/logs'
+else:
+    logs_dir = 'logs'
 
 ### SMTP DATA(WITHOUT AUTH); NO BY DEFAULT ###
 send_mail_option = 'no'
@@ -64,7 +81,7 @@ if not path.isdir(logs_dir):
     mkdir(logs_dir)
 
 ### DEFINE LOG NAME
-app_log_name = f'logs_dir/{appname}_{str(start_date)}.log'
+app_log_name = f'{logs_dir}/{appname}_{str(start_date)}.log'
 
 ### DEFINE LOGGING SETTINGS
 logging.basicConfig(filename=app_log_name, filemode='a', level=logging.INFO,
