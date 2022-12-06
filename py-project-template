@@ -55,7 +55,8 @@ else:
 send_mail_option = 'no'
 smtp_server = '<YOUR-SMTP-SERVER>'
 from_addr = appname+'@EX.COM'
-to_addr_list = ['ADMIN@EX.COM']
+to_addr_list_users = ['USER@EX.COM']
+to_addr_list_admin = ['ADMIN@EX.COM']
 smtp_port = 25
 
 ####################
@@ -143,15 +144,17 @@ def send_mail_report(type):
         if type == 'error':
             logging.info('START: sending email error report')
             subj = appname+' Script Error Occured'
-        else:
+            rcpt_to = to_addr_list_admin
+        elif type == 'reort':
             logging.info('START: sending email final report')
             subj = appname+' Script Final Report'
+            rcpt_to = to_addr_list_users
         with open(app_log_name, 'r') as log:
-            msg = log.read()
+            body = log.read()
         try:
             with SMTP(smtp_server, smtp_port) as send_mail:
                 send_mail.ehlo()
-                send_mail.sendmail(from_addr=from_addr, to_addrs=to_addr_list, msg=f'subject: {subj}({start_date})\n\n{start_date}:\n{msg}')
+                send_mail.sendmail(from_addr=from_addr, to_addrs=rcpt_to, msg=f'subject: {subj}({start_date})\n\n{start_date}:\n{body}')
                 send_mail.quit()
                 if type == 'error':
                     logging.info('DONE: sending email error report\n')
@@ -159,9 +162,9 @@ def send_mail_report(type):
                     logging.info('DONE: sending email final report\n')
         except Exception as e:
             if type == 'error':
-                logging.warning('FAILED: sending email error report, moving on...\n')
+                logging.exception('FAILED: sending email error report, moving on...\n')
             else:
-                logging.warning('FAILED: sending email final report, moving on...\n')
+                logging.exception('FAILED: sending email final report, moving on...\n')
         
 
 #####################
@@ -174,5 +177,4 @@ def send_mail_report(type):
 logging.info('#########################')
 logging.info('DONE: Script job done!\n') 
 files_rotate_n_count_estimated_time()
-send_mail_report()
-exit()
+send_mail_report('report')
