@@ -17,7 +17,7 @@ from smtplib import SMTP
 ###################
 ### COMMON DATA ###
 
-### SCRIPT APPNAME(FOR SEND MAIL FUNCTION & ETC)
+### SCRIPT APPNAME(FOR SEND MAIL FUNCTION, LOGNAME, ETC)
 appname = 'YOUR_PROJECT_NAME'
 
 ### WORKING DIR
@@ -138,10 +138,14 @@ def files_rotate_n_count_estimated_time():
 To send email report at.
 By default, at the end of the script only.
 '''
-def send_mail_report():
+def send_mail_report(type):
     if send_mail_option == 'yes':
-        logging.info('START: sending error report')
-        subj = appname+' Script Error Occured'
+        if type == 'error':
+            logging.info('START: sending email error report')
+            subj = appname+' Script Error Occured'
+        else:
+            logging.info('START: sending email final report')
+            subj = appname+' Script Final Report'
         with open(app_log_name, 'r') as log:
             msg = log.read()
         try:
@@ -149,11 +153,16 @@ def send_mail_report():
                 send_mail.ehlo()
                 send_mail.sendmail(from_addr=from_addr, to_addrs=to_addr_list, msg=f'subject: {subj}({start_date})\n\n{start_date}:\n{msg}')
                 send_mail.quit()
-                logging.info('DONE: sending error report\n')
+                if type == 'error':
+                    logging.info('DONE: sending email error report\n')
+                else:
+                    logging.info('DONE: sending email final report\n')
         except Exception as e:
-            logging.warning('FAILED: sending error report, moving on...\n')
-    else:
-        logging.warning('Email report was not set, skipping')
+            if type == 'error':
+                logging.warning('FAILED: sending email error report, moving on...\n')
+            else:
+                logging.warning('FAILED: sending email final report, moving on...\n')
+        
 
 #####################
 ### MAIN WORKFLOW ###
