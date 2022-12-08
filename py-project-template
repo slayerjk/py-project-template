@@ -5,6 +5,8 @@ from datetime import datetime
 from os import mkdir, path, remove
 from pathlib import Path
 from smtplib import SMTP
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 '''
 <THIS IS THE SCRIPT DESCRIPTION>
@@ -56,7 +58,7 @@ send_mail_option = 'no'
 smtp_server = '<YOUR-SMTP-SERVER>'
 from_addr = appname+'@EX.COM'
 to_addr_list_users = ['USER@EX.COM']
-to_addr_list_admin = ['ADMIN@EX.COM']
+to_addr_list_admins = ['ADMIN@EX.COM']
 smtp_port = 25
 
 ####################
@@ -140,21 +142,29 @@ To send email report at.
 By default, at the end of the script only.
 '''
 def send_mail_report(type):
+    message = MIMEMultipart()
+    message["From"] = from_addr
+
     if send_mail_option == 'yes':
         if type == 'error':
             logging.info('START: sending email error report')
-            subj = appname+' Script Error Occured'
-            rcpt_to = to_addr_list_admin
-        elif type == 'reort':
+            message["Subject"] = f'appname - Script Error({start_date})'
+            message["To"] = ', '.join(to_addr_list_admins)
+            rcpt_to = to_addr_list_admins
+        elif type == 'report':
             logging.info('START: sending email final report')
-            subj = appname+' Script Final Report'
+            message["Subject"] = f'appname - Script Report({start_date})'
+            message["To"] = ', '.join(to_addr_list_users)
             rcpt_to = to_addr_list_users
+        
         with open(app_log_name, 'r') as log:
-            body = log.read()
+                report = log.read()
+                message.attach(MIMEText(report, "plain"))
         try:
             with SMTP(smtp_server, smtp_port) as send_mail:
+                data = message.as_string()
                 send_mail.ehlo()
-                send_mail.sendmail(from_addr=from_addr, to_addrs=rcpt_to, msg=f'subject: {subj}({start_date})\n\n{start_date}:\n{body}')
+                send_mail.sendmail(from_addr, rcpt_to, data)
                 send_mail.quit()
                 if type == 'error':
                     logging.info('DONE: sending email error report\n')
