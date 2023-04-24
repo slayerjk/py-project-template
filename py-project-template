@@ -181,7 +181,13 @@ def send_mail_report(type):
                 logging.exception('FAILED: sending email error report, moving on...\n')
             else:
                 logging.exception('FAILED: sending email final report, moving on...\n')
-        
+
+######################
+### MAIN FUNCTIONS ###
+######################        
+'''
+Section for your app's various functions
+'''
 
 #####################
 ### MAIN WORKFLOW ###
