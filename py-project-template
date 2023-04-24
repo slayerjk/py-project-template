@@ -205,6 +205,7 @@ logging.info('#########################')
 logging.info('SUCCEEDED: Script job done!') 
 
 count_estimated_time(start_date_n_time)
+logging.info('----------------------------')
 files_rotate(logs_dir, logs_to_keep)
 
 if send_mail_option == 'yes':
