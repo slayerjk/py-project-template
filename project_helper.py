@@ -1,14 +1,14 @@
 """
-Helper functions:
+Various Helper functions:
  - files_rotate
  - count estimated time
+ - check dir exist
+ - check file exist
 """
 
 from pathlib import Path
-from os import remove, path
+from os import remove, mkdir, path
 from datetime import datetime
-
-# HELPER FUNCTIONS
 
 
 # FILES ROTATION (LOGS/OTHER)
@@ -40,3 +40,14 @@ def count_estimated_time(start_datetime):
     """
     end_time = datetime.now()
     return 'Estimated time is: ' + str(end_time - start_datetime)
+
+
+# CHECK FILE EXIST
+def check_file(file_path):
+    return path.isfile(file_path)
+
+
+# CHECK DIR EXIST
+def check_create_dir(dir_path):
+    if not path.isdir(dir_path):
+        mkdir(dir_path)
