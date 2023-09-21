@@ -1,5 +1,5 @@
 """
-Settings and functions for e-mail(smtp) reporting
+Sending emails(smtp): reports or simple sending
 """
 
 from datetime import datetime
