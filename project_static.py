@@ -1,17 +1,17 @@
-'''
-Static initial project's data
-'''
+"""
+- logging settings
+- date settings
+- static initial project's data
+"""
 
 import logging
 from datetime import datetime
-from tempfile import TemporaryFile
 import json
-import csv
 
 # COMMON DATA
 
 # SCRIPT APPNAME(FOR SEND MAIL FUNCTION, LOGNAME, ETC)
-appname = 'MAILING'
+appname = '<YOUR-APP-NAME>'
 
 # SCRIPT DATA DIR
 '''
@@ -54,7 +54,7 @@ else:
 logging_format: is for string of log representation
 logging_datefmt: is for representation of %(asctime) param
 '''
-logging_format='%(asctime)s - %(levelname)s - %(message)s'
+logging_format = '%(asctime)s - %(levelname)s - %(message)s'
 logging_datefmt = '%d-%b-%Y %H:%M:%S'
 
 # LOG FILEMODE
