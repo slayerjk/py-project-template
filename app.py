@@ -1,5 +1,5 @@
 # IMPORT PROJECTS PARTS
-from project_common import appname, start_date_n_time, logging, logs_dir, logs_to_keep, app_log_name,\
+from project_static import appname, start_date_n_time, logging, logs_dir, logs_to_keep, app_log_name,\
     script_data
 
 from project_helper import count_estimated_time, files_rotate, check_file, check_create_dir
