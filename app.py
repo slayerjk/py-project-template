@@ -7,7 +7,8 @@ from project_helper import count_estimated_time, files_rotate, check_file, check
 # from app_functions import 
 
 # MAILING IMPORTS
-# from project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr
+# from project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr,\
+#     mail_list_admins, mail_list_users
 # from project_mail_report import send_mail_report, send_mail
 
 
