@@ -7,3 +7,4 @@ Files:
 * project_mailing.py - functions to send email(smtp)
 * app_functions.py - app regarding functions
 * app.py - calling functions
+* script_data/mailing_data.json - mailing data template
