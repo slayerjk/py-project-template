@@ -1,0 +1,7 @@
+{
+  "smtp_server": "<YOUR SMTP SERVER>",
+  "smtp_port": 25,
+  "smtp_login": "<YOUR SMTP LOGIN>",
+  "smtp_pass": "<YOUR SMTP PASSWORD>",
+  "smtp_from_addr": "<MAIL FROM ADDRESS>"
+}
