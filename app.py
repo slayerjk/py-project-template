@@ -42,8 +42,15 @@ logging.info('#########################')
 logging.info('SUCCEEDED: Script job done!')
 
 logging.info(count_estimated_time(start_date_n_time))
-logging.info('----------------------------')
-files_rotate(logs_dir, logs_to_keep, app_log_name)
+logging.info('----------------------------\n')
+logging.info('STARTED: file/logs rotation')
+try:
+    files_rotate(logs_dir, logs_to_keep, app_log_name)
+except Exception as e:
+    logging.info('FAILED: file/logs rotation\n')
+else:
+    logging.info('DONE: file/logs rotation\n')
+
 
 # # MAIL REPORT
 # logging.info('STARTED: sending email report')
