@@ -58,6 +58,6 @@ else:
 #     send_mail_report(appname, mail_list_admins, smtp_from_addr, smtp_server, smtp_port, app_log_name, login=None,
 #                          password=None)
 # except Exception as e:
-#     logging.warning('FAILED: sending email report')
+#     logging.warning(f'FAILED: sending email report\n{e}')
 # else:
 #     logging.info('DONE: sending email report')
