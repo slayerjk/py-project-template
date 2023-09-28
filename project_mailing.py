@@ -7,6 +7,7 @@ from smtplib import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from ssl import create_default_context
+from datetime import datetime
 
 
 # SIMPLE SEND EMAIL FUNCTION W/WO AUTH
@@ -51,11 +52,11 @@ def send_mail_report(appname, to_mail_list, mail_from, smtp_server, smtp_port, l
     """
     message = MIMEMultipart()
     message["From"] = mail_from
+    message["Subject"] = f'{appname} - Script Error({datetime.now()})'
+    message["To"] = ', '.join(to_mail_list)
+    rcpt_to = to_mail_list
 
     with open(log_file, 'r') as log:
-        message["Subject"] = f'{appname} - Script Error({subj_date})'
-        message["To"] = ', '.join(to_mail_list)
-        rcpt_to = to_mail_list
         report = log.read()
         message.attach(MIMEText(report, "plain"))
     try:
@@ -70,7 +71,7 @@ def send_mail_report(appname, to_mail_list, mail_from, smtp_server, smtp_port, l
                 server.login(login, password)
             data = message.as_string()
             server.ehlo()
-            server.sendmail(from_addr, rcpt_to, data)
+            server.sendmail(mail_from, rcpt_to, data)
             server.quit()
     except Exception as e:
-        raise Exception(f'{datetime.now()} - WARNING - FAILED: sending email report\n{e}')
+        raise Exception(e)
