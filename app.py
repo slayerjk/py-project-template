@@ -9,7 +9,7 @@ from project_helper import count_estimated_time, files_rotate, check_file, check
 # # MAILING IMPORTS
 # from project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr,\
 #     mail_list_admins, mail_list_users
-# from project_mail_report import send_mail_report, send_mail
+# from project_mailing import send_mail_report, send_mail
 
 
 # SCRIPT STARTED ALERT
