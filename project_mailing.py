@@ -52,7 +52,7 @@ def send_mail_report(appname, to_mail_list, mail_from, smtp_server, smtp_port, l
     """
     message = MIMEMultipart()
     message["From"] = mail_from
-    message["Subject"] = f'{appname} - Script Error({datetime.now()})'
+    message["Subject"] = f'{appname} - Script Report({datetime.now()})'
     message["To"] = ', '.join(to_mail_list)
     rcpt_to = to_mail_list
 
