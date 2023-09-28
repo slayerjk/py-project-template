@@ -6,7 +6,7 @@ from project_helper import count_estimated_time, files_rotate, check_file, check
 
 # from app_functions import 
 
-# MAILING IMPORTS
+# # MAILING IMPORTS
 # from project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr,\
 #     mail_list_admins, mail_list_users
 # from project_mail_report import send_mail_report, send_mail
@@ -44,3 +44,13 @@ logging.info('SUCCEEDED: Script job done!')
 logging.info(count_estimated_time(start_date_n_time))
 logging.info('----------------------------')
 files_rotate(logs_dir, logs_to_keep, app_log_name)
+
+# # MAIL REPORT
+# logging.info('STARTED: sending email report')
+# try:
+#     send_mail_report(appname, mail_list_admins, smtp_from_addr, smtp_server, smtp_port, app_log_name, login=None,
+#                          password=None)
+# except Exception as e:
+#     logging.warning('FAILED: sending email report')
+# else:
+#     logging.info('DONE: sending email report')
