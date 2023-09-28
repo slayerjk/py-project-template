@@ -26,6 +26,9 @@ check_create_dir(script_data)
 # CHECK LOGS DIR EXIST/CREATE
 check_create_dir(logs_dir)
 
+# CHECK MAILING DATA
+if not check_file(mailing_data):
+    logging.warning('NO MAILING DATA PRESENT!')
 
 """
 OTHER CODE GOES HERE
