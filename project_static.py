@@ -74,5 +74,15 @@ app_log_name = f'{logs_dir}/{appname}_{str(start_date)}.log'
 logging.basicConfig(filename=app_log_name, filemode=log_filemode, level=logging.INFO,
                     format=logging_format, datefmt=logging_datefmt)
 
+# MAILING DATA
+mailing_data = f'{script_data}/mailing_data.json'
+with open(mailing_data, encoding='utf-8') as file:
+    data = json.load(file)
+    smtp_server = data['smtp_server']
+    smtp_port = data['smtp_port']
+    smtp_login = data['smtp_login']
+    smtp_pass = data['smtp_pass']
+    smtp_from_addr = data['smtp_from_addr']
+
 # VA PROJECT REGARDING DATA
 
