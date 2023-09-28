@@ -22,15 +22,12 @@ def files_rotate(path_to_rotate, num_of_files_to_keep, log_name):
         log_name: wich log file to use to write in
     """
     with open(log_name, 'a') as output:
-        print(f'{datetime.now()} - INFO - STARTED: log rotation', file=output)
         count_files_to_keep = 1
         basepath = sorted(Path(path_to_rotate).iterdir(), key=path.getctime, reverse=True)
         for entry in basepath:
             if count_files_to_keep > num_of_files_to_keep:
                 remove(entry)
-                print(f'{datetime.now()} - REMOVED: {entry}', file=output)
             count_files_to_keep += 1
-        print(f'{datetime.now()} - SUCCEEDED: log rotation', file=output)
 
 
 # ESTIMATED TIME
