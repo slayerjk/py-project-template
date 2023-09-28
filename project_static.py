@@ -83,6 +83,8 @@ with open(mailing_data, encoding='utf-8') as file:
     smtp_login = data['smtp_login']
     smtp_pass = data['smtp_pass']
     smtp_from_addr = data['smtp_from_addr']
+    mail_list_admins = data['list_admins']
+    mail_list_users = data['list_users']
 
 # VA PROJECT REGARDING DATA
 
