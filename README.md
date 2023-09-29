@@ -2,9 +2,10 @@
 This is just my new python project template.
 
 Files:
-* project_static.py - various common vars, checks, etc
-* project_helper.py - various helper functions
-* project_mailing.py - functions to send email(smtp)
-* app_functions.py - app regarding functions
 * app.py - calling functions
-* script_data/mailing_data.json - mailing data template
+* app_scripts/project_static.py - various common vars, checks, etc
+* app_scripts/project_helper.py - various helper functions
+* app_scripts/project_mailing.py - functions to send email(smtp)
+* app_scripts/app_functions.py - app regarding functions
+
+* data_files/mailing_data.json - mailing data template
