@@ -1,15 +1,15 @@
 # IMPORT PROJECTS PARTS
-from project_static import (appname, start_date_n_time, logging, logs_dir, logs_to_keep, app_log_name,\
-    script_data
+from app_scripts.project_static import (appname, start_date_n_time, logging, logs_dir, logs_to_keep, app_log_name,
+                                        data_files)
 
-from project_helper import count_estimated_time, files_rotate, check_file, check_create_dir
+from app_scripts.project_helper import count_estimated_time, files_rotate, check_file, check_create_dir
 
-# from app_functions import 
+# from app_scripts.app_functions import
 
 # # MAILING IMPORTS
-# from project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr,\
+# from app_scripts.project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr,\
 #     mail_list_admins, mail_list_users
-# from project_mailing import send_mail_report, send_mail
+# from app_scripts.project_mailing import send_mail_report, send_mail
 
 
 # SCRIPT STARTED ALERT
@@ -21,13 +21,13 @@ logging.info('----------------------------\n')
 # CHECKING DATA FILES
 
 # CHECK DATA DIR EXIST/CREATE
-check_create_dir(script_data)
+check_create_dir(data_files)
 
 # CHECK LOGS DIR EXIST/CREATE
 check_create_dir(logs_dir)
 
 # CHECK MAILING DATA
-if not check_file(mailing_data):
+if not check_file(data_files):
     logging.warning('NO MAILING DATA PRESENT!')
 
 """
@@ -45,9 +45,9 @@ logging.info(count_estimated_time(start_date_n_time))
 logging.info('----------------------------\n')
 logging.info('STARTED: file/logs rotation')
 try:
-    files_rotate(logs_dir, logs_to_keep, app_log_name)
+    files_rotate(logs_dir, logs_to_keep)
 except Exception as e:
-    logging.info('FAILED: file/logs rotation\n')
+    logging.info(f'FAILED: file/logs rotation\n{e}')
 else:
     logging.info('DONE: file/logs rotation\n')
 
