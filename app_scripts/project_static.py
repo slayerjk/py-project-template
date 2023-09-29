@@ -11,19 +11,14 @@ import json
 # COMMON DATA
 
 # SCRIPT APPNAME(FOR SEND MAIL FUNCTION, LOGNAME, ETC)
-appname = '<YOUR-APP-NAME>'
+appname = 'YOUR-APP-NAME'
 
 # SCRIPT DATA DIR
 '''
 By default script uses script's location dir.
-If you need custom path for script(sensitive) data, 
-set custom_script_data_path = 'yes'
+If you need custom path for script(sensitive) data
 '''
-custom_script_data_path = 'no'
-if custom_script_data_path == 'yes':
-    data_files = '<YOUR ABS PATH>'
-else:
-    data_files = 'data_files'
+data_files = 'data_files'
 
 # SET TIME TO
 start_date_n_time = datetime.now()
