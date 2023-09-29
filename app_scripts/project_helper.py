@@ -1,17 +1,48 @@
 """
 Various Helper functions:
  - files_rotate
+ - functions decorator
  - count estimated time
  - check dir exist
  - check file exist
-"""
+ """
 
 from pathlib import Path
 from os import remove, mkdir, path
-from datetime import datetime
+from app_scripts.project_static import logging
+
+
+# FUNCTION CALL DECORATOR
+def func_decor(action='PRINTING FUNC DESCR', level='warn'):
+    """
+
+    Args:
+        action: str, decored function description
+        level: default: warn, crit; func fail: warn->skip error, crit->exit program
+
+    Returns: decored func
+
+    """
+    def inner(func):
+        def wrapper(*args, **kwargs):
+            logging.info(f'STARTED: {action}')
+            try:
+                result = func(*args, **kwargs)
+            except Exception as e:
+                if level == 'crit':
+                    logging.error(f'FAILED: {action}, exiting\n{e}')
+                    exit()
+                else:
+                    logging.warning(f'FAILED: {action}, skipping\n{e}')
+            else:
+                logging.info(f'DONE: {action}\n')
+                return result
+        return wrapper
+    return inner
 
 
 # FILES ROTATION (LOGS/OTHER)
+@func_decor('file/logs rotation')
 def files_rotate(path_to_rotate, num_of_files_to_keep):
     """
     This function is for log rotation.
@@ -26,15 +57,6 @@ def files_rotate(path_to_rotate, num_of_files_to_keep):
         if count_files_to_keep > num_of_files_to_keep:
             remove(entry)
         count_files_to_keep += 1
-
-
-# ESTIMATED TIME
-def count_estimated_time(start_datetime):
-    """
-    This function is for count script estimated time
-    """
-    end_time = datetime.now()
-    return 'Estimated time is: ' + str(end_time - start_datetime)
 
 
 # CHECK FILE EXIST
