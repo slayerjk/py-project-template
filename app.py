@@ -1,8 +1,10 @@
 # IMPORT PROJECTS PARTS
-from app_scripts.project_static import (appname, start_date_n_time, logging, logs_dir, logs_to_keep, app_log_name,
-                                        data_files)
+from time import perf_counter
 
-from app_scripts.project_helper import count_estimated_time, files_rotate, check_file, check_create_dir
+from app_scripts.project_static import appname, start_date_n_time, logging, logs_dir, logs_to_keep, data_files,\
+        app_log_name
+
+from app_scripts.project_helper import files_rotate, check_file, check_create_dir
 
 # from app_scripts.app_functions import
 
@@ -17,6 +19,8 @@ logging.info(f'SCRIPT WORK STARTEDED: {appname}')
 logging.info(f'Script Starting Date&Time is: {str(start_date_n_time)}')
 logging.info('----------------------------\n')
 
+# START PERF COUNTER
+start_time_counter = perf_counter()
 
 # CHECKING DATA FILES
 
@@ -34,22 +38,14 @@ if not check_file(data_files):
 OTHER CODE GOES HERE
 """
 
-
 # POST-WORK PROCEDURES
 
 # FINISH JOBS
 logging.info('#########################')
 logging.info('SUCCEEDED: Script job done!')
-
-logging.info(count_estimated_time(start_date_n_time))
+logging.info(f'Estimated time is: {perf_counter() - start_time_counter}')
 logging.info('----------------------------\n')
-logging.info('STARTED: file/logs rotation')
-try:
-    files_rotate(logs_dir, logs_to_keep)
-except Exception as e:
-    logging.info(f'FAILED: file/logs rotation\n{e}')
-else:
-    logging.info('DONE: file/logs rotation\n')
+files_rotate(logs_dir, logs_to_keep)
 
 
 # # MAIL REPORT
