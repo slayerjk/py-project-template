@@ -11,7 +11,6 @@ from ssl import create_default_context
 
 # SIMPLE SEND EMAIL FUNCTION W/WO AUTH
 def send_mail(mail_to, mail_from, smtp_server, smtp_port, mail_data, login=None, password=None):
-    # Try to log in to server and send email
     with SMTP(smtp_server, smtp_port) as server:
         # DEBUG: 1 or 2(with timestamp)
         # server.set_debuglevel(1)
@@ -19,9 +18,9 @@ def send_mail(mail_to, mail_from, smtp_server, smtp_port, mail_data, login=None,
         # USE AUTH: STARTTLS IF LOGIN IS NOT NONE
         if login and password:
             context = create_default_context()
-            server.starttls(context=context)  # Secure the connection
+            server.starttls(context=context)
             server.login(login, password)
-        server.ehlo()  # Can be omitted
+        server.ehlo()
         message = MIMEMultipart()
         message["From"] = mail_from
         message["Subject"] = 'TEST MAILING SUBJECT'
@@ -30,6 +29,7 @@ def send_mail(mail_to, mail_from, smtp_server, smtp_port, mail_data, login=None,
         message.attach(MIMEText(mail_data, "html"))
         data = message.as_string()
         server.sendmail(mail_from, rcpt_to, data)
+        return 'Success'
 
 
 # EMAIL REPORT W/WO AUTH
@@ -73,3 +73,5 @@ def send_mail_report(appname, to_mail_list, mail_from, smtp_server, smtp_port, l
             server.quit()
     except Exception as e:
         raise Exception(e)
+    else:
+        return 'Success'
