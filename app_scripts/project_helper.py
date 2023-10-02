@@ -17,7 +17,7 @@ def func_decor(action='PRINTING FUNC DESCR', level='warn'):
     """
 
     Args:
-        action: str, decored function description
+        action: str, decored function description, "logging started" or "loggiing started for" {obj=user_name}
         level: default: warn, crit; func fail: warn->skip error, crit->exit program
 
     Returns: decored func
@@ -34,6 +34,7 @@ def func_decor(action='PRINTING FUNC DESCR', level='warn'):
                     exit()
                 else:
                     logging.warning(f'FAILED: {action}, skipping\n{e}')
+                    return None
             else:
                 logging.info(f'DONE: {action}\n')
                 return result
