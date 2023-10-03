@@ -29,20 +29,8 @@ start_date = start_date_n_time.strftime('%d-%m-%Y')
 # LOGS LOCATION
 '''
 By default script uses script's location dir.
-If you need custom path for logs,
-set custom_logs_path = 'yes'
 '''
-custom_logs_path_option = 'no'
-'''
-custom logs path example(with your appname in it):
-custom_logs_path =  f'/var/logs/{appname}'
-'''
-custom_logs_path = '<YOUR ABS PATH FOR SCRIPTS LOGS>'
-
-if custom_logs_path_option == 'yes':
-    logs_dir = custom_logs_path
-else:
-    logs_dir = 'logs'
+logs_dir = 'logs'
 
 # LOGS FORMAT
 '''
