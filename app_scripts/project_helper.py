@@ -34,7 +34,6 @@ def func_decor(action='PRINTING FUNC DESCR', level='warn'):
                     exit()
                 else:
                     logging.warning(f'FAILED: {action}, skipping\n{e}')
-                    return None
             else:
                 logging.info(f'DONE: {action}\n')
                 return result
