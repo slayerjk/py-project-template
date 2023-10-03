@@ -4,11 +4,11 @@ from time import perf_counter
 from app_scripts.project_static import appname, start_date_n_time, logging, logs_dir, logs_to_keep, data_files,\
         app_log_name
 
-from app_scripts.project_helper import files_rotate, check_file, check_create_dir
+from app_scripts.project_helper import files_rotate, check_file, check_create_dir, func_decor
 
 # from app_scripts.app_functions import
 
-# # MAILING IMPORTS
+# MAILING IMPORTS
 # from app_scripts.project_static import mailing_data, smtp_server, smtp_port, smtp_login, smtp_pass, smtp_from_addr,\
 #     mail_list_admins, mail_list_users
 # from app_scripts.project_mailing import send_mail_report, send_mail
@@ -30,9 +30,8 @@ check_create_dir(data_files)
 # CHECK LOGS DIR EXIST/CREATE
 check_create_dir(logs_dir)
 
-# CHECK MAILING DATA
-if not check_file(data_files):
-    logging.warning('NO MAILING DATA PRESENT!')
+# CHECK MAILING DATA EXIST
+# func_decor(f'checking {mailing_data} exists', 'crit')(check_file)(mailing_data)
 
 """
 OTHER CODE GOES HERE
