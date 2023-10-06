@@ -7,6 +7,7 @@
 import logging
 from datetime import datetime
 import json
+from os import path, mkdir
 
 # COMMON DATA
 
@@ -31,6 +32,10 @@ start_date = start_date_n_time.strftime('%d-%m-%Y')
 By default script uses script's location dir.
 '''
 logs_dir = 'logs'
+
+# CHECK LOGS DIR EXIST/CREATE
+if not path.isdir(logs_dir):
+    mkdir(logs_dir)
 
 # LOGS FORMAT
 '''
