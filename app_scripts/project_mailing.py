@@ -6,7 +6,8 @@ from datetime import datetime
 from smtplib import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from ssl import create_default_context, OPENSSL_VERSION
+from ssl import create_default_context
+# from ssl import OPENSSL_VERSION
 from email.message import EmailMessage
 
 
@@ -60,7 +61,7 @@ def send_mail(mail_to, mail_from, smtp_server, smtp_port, mail_data, subject='TE
 
 # EMAIL REPORT W/WO AUTH
 def send_mail_report(appname, mail_to, mail_from, smtp_server, smtp_port,
-                     log_file=None, mail_body=None,login=None, password=None,):
+                     log_file=None, mail_body=None, login=None, password=None, report=None):
     """
     To send email report at.
     By default, at the end of the script only.
@@ -80,10 +81,18 @@ def send_mail_report(appname, mail_to, mail_from, smtp_server, smtp_port,
         mail_body: None by default, str
         login: str, login
         password: str, password
+        report: None, 'e' - error report, 'f' - final log
     """
     message = MIMEMultipart()
     message["From"] = mail_from
-    message["Subject"] = f'{appname} - Script Report({datetime.now()})'
+
+    if report == 'e':
+        message["Subject"] = f'{appname} - ERROR: ({datetime.now()})'
+    elif report == 'f':
+        message["Subject"] = f'{appname} - FINAL LOG: ({datetime.now()})'
+    else:
+        message["Subject"] = f'{appname} - Script Report({datetime.now()})'
+
     if isinstance(mail_to, (list, tuple)):
         message["To"] = ', '.join(mail_to)
     else:
