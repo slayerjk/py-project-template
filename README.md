@@ -1,11 +1,17 @@
-# py-project-template
-This is just my new python project template.
+This is a ... script ...
 
-Files:
-* app.py - calling functions
-* project_static.py - various common vars, checks, etc
-* app_scripts/project_helper.py - various helper functions
-* app_scripts/project_mailing.py - functions to send email(smtp)
-* app_scripts/app_functions.py - app regarding functions
+**DESCRIPTION**:
+Check workflow
 
-* data_files/mailing_data.json - mailing data template
+Script was written with Python 3.11.
+
+Main libs to use:
+* 
+
+**WORKFLOW(functions)**:
+1. ***
+
+**Additional workflow(mailing):**
+* send report to users(list) (OPTIONAL)
+* send error report if errors (OPTIONAL)
+* log rotation - check logs_to_keep var(default is 30 days) in project_static
