@@ -7,7 +7,7 @@
 import logging
 from datetime import datetime
 import json
-from os import path, mkdir
+from os import path, mkdir, getcwd
 
 # COMMON DATA
 
@@ -19,7 +19,9 @@ appname = 'YOUR-APP-NAME'
 By default script uses script's location dir.
 If you need custom path for script(sensitive) data
 '''
-data_files = 'data_files'
+script_dir = getcwd()
+
+data_files = f'{script_dir}/data_files'
 
 # SET TIME TO
 start_date_n_time = datetime.now()
@@ -31,7 +33,7 @@ start_date = start_date_n_time.strftime('%d-%m-%Y')
 '''
 By default script uses script's location dir.
 '''
-logs_dir = 'logs'
+logs_dir = f'{script_dir}/logs'
 
 # CHECK LOGS DIR EXIST/CREATE
 if not path.isdir(logs_dir):
