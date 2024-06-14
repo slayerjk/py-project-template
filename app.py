@@ -1,9 +1,20 @@
 # IMPORT PROJECTS PARTS
 from time import perf_counter
 
-from project_static import appname, start_date_n_time, logging, logs_dir, logs_to_keep, data_files
+from project_static import (
+    appname,
+    start_date_n_time,
+    logging,
+    logs_dir,
+    logs_to_keep,
+    data_files
+)
 
-from app_scripts.project_helper import files_rotate, check_create_dir, func_decor
+from app_scripts.project_helper import (
+    files_rotate,
+    check_create_dir,
+    func_decor
+)
 
 # from app_scripts.app_functions import dummy
 
