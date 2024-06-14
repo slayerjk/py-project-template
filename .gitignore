@@ -1,5 +1,7 @@
+# ignore all
 *
 
+# except
 !app_scripts/app_functions.py
 !app_scripts/project_mailing.py
 !app_scripts/project_helper.py
